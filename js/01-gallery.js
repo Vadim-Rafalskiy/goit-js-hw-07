@@ -13,20 +13,31 @@ const render = arg => {
 const markup = galleryItems
   .map(
     ({ preview, original, description }) =>
-      `<div class="gallery__item"><a class="gallery__link"><img class="gallery__image" alt="${description}" data-action="${original}" src="${preview}"></a></div>`
+      `<div class="gallery__item"><a class="gallery__link" href="${original}"><img class="gallery__image" alt="${description}" data-sourse="${original}" src="${preview}"></a></div>`
   )
   .join('');
 
 render(markup);
 
+let isVisibleModal = false;
+let instance;
 const handleImage = e => {
   if (e.target.nodeName !== 'IMG') {
     return;
   }
-  const instance = basicLightbox.create(`
-      <img src="${e.target.dataset.action}" width="800" height="600">
+  e.preventDefault();
+  instance = basicLightbox.create(`
+      <img src="${e.target.dataset.sourse}" width="800" height="600">
   `);
   instance.show();
+  isVisibleModal = instance.visible();
+};
+
+const handleImageClose = e => {
+  if (e.code == 'Escape' && isVisibleModal) {
+    instance.close();
+  }
 };
 
 ref.gallery.addEventListener('click', handleImage);
+ref.gallery.addEventListener('keydown', handleImageClose);
