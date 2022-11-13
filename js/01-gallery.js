@@ -19,7 +19,6 @@ const markup = galleryItems
 
 render(markup);
 
-let isVisibleModal = false;
 let instance;
 const handleImage = e => {
   if (e.target.nodeName !== 'IMG') {
@@ -30,11 +29,10 @@ const handleImage = e => {
       <img src="${e.target.dataset.sourse}" width="800" height="600">
   `);
   instance.show();
-  isVisibleModal = instance.visible();
 };
 
 const handleImageClose = e => {
-  if (e.code == 'Escape' && isVisibleModal) {
+  if (e.code == 'Escape' && basicLightbox.visible()) {
     instance.close();
   }
 };
