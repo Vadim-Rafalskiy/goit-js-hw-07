@@ -40,4 +40,5 @@ const handleClick = e => {
 };
 
 refs.gallery.removeEventListener('keydown', handleKeydown);
+
 refs.gallery.addEventListener('click', handleClick);

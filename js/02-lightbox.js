@@ -17,15 +17,16 @@ const render = () => {
 
 render();
 
+const gallery = new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
+
 const handleClick = e => {
   if (e.target.nodeName !== 'IMG') {
     return;
   }
   e.preventDefault();
-  //    gallery;
-  const gallery = new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
+
   gallery.on('shown.simpleLightbox');
-};
+  refs.gallery.removeEventListener('click', handleClick);
+}; //
 
 refs.gallery.addEventListener('click', handleClick);
-refs.gallery.removeEventListener('click', handleClick);
