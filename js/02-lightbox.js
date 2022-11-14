@@ -1,25 +1,23 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-const ref = {
+const refs = {
   gallery: document.querySelector('.gallery'),
 };
 
-const render = arg => {
-  //   ref.gallery.innerHTML = '';
-  ref.gallery.insertAdjacentHTML('beforeend', arg);
+const getItemTemplate = ({ preview, original, description }) =>
+  `<a class="gallery__item" href="${original}"><img class="gallery__image" alt="${description}"  src="${preview}"></a>`;
+
+const render = () => {
+  const lis = galleryItems.map(getItemTemplate);
+
+  refs.gallery.innerHTML = '';
+  refs.gallery.insertAdjacentHTML('beforeend', lis.join(''));
 };
 
-const markup = galleryItems
-  .map(
-    ({ preview, original, description }) =>
-      `<a class="gallery__item" href="${original}"><img class="gallery__image" alt="${description}"  src="${preview}"></a>`
-  )
-  .join('');
+render();
 
-render(markup);
-
-const handleImage = e => {
+const handleClick = e => {
   if (e.target.nodeName !== 'IMG') {
     return;
   }
@@ -29,4 +27,5 @@ const handleImage = e => {
   gallery.on('shown.simpleLightbox');
 };
 
-ref.gallery.addEventListener('click', handleImage);
+refs.gallery.addEventListener('click', handleClick);
+refs.gallery.removeEventListener('click', handleClick);
